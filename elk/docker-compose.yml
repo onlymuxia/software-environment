@@ -1,48 +1,12 @@
 version: "3.3"
 services:
-    jenkins:
-        image: jenkins/jenkins:lts
-        volumes:
-            - /opt/dockervol/jenkins:/var/jenkins_home 
-        ports:
-            - "8080:8080"
-            - "50000:50000"
-        container_name: jenkins
-        
-    portainer:
-        image: portainer/portainer
-        volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock" 
-        ports:
-            - "9000:9000"
-        container_name: portainer
-        restart: always
-        
-    db:
-        #构建mysql镜像
-        image: mysql
-        container_name: mysql-db # 容器名
-        command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci #设置utf8字符集
-        restart: always
-        environment:
-          MYSQL_ROOT_PASSWORD: 123456 #root管理员用户密码
-          MYSQL_USER: keith   #创建test用户
-          MYSQL_PASSWORD: 1989929  #设置test用户的密码
-        ports:
-          - '3306:3306'  #host物理直接映射端口为6606
-        volumes:
-            #mysql数据库挂载到host物理机目录/e/docker/mysql/data/db
-          - "/opt/dockervol/mysql/data/db:/var/lib/mysql"  
-            #容器的配置目录挂载到host物理机目录/e/docker/mysql/data/conf  
-          - "/opt/dockervol/mysql/data/conf:/etc/mysql/conf.d"  
-
-
     elasticsearch: #服务名称（不是容器名）
         image: elasticsearch  #使用的镜像
         ports:
             - "9200:9200"  #暴露的端口信息和docker run -d -p 80:80 一样
         restart: "always" #重启策略，能够使服务保持始终运行，生产环境推荐使用
         container_name: elasticsearch-1 #容器名称
+        hostname: es01
 
     kibana: #服务名称（不是容器名）
         image: kibana  #使用的镜像
