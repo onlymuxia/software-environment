@@ -1,6 +1,10 @@
 version: "3.3"
 services:
-  redis:
-    image: redis:latest
-    deploy:
-      replicas: 2
+  jenkins:
+    image: jenkins/jenkins:lts
+    volumes:
+      - /opt/dockervol/jenkins:/var/jenkins_home 
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+  
