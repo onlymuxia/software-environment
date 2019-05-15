@@ -11,7 +11,7 @@ services:
         #容器间通信
         #一，depends_on
         #   使用 depends_on 来访问容器中的数据,会依据依赖顺序启动服务,启动时 SERVICE 会自动包括 SERVICE 的依赖
-            depends_on 不做端口映射，只规定依赖与顺序
+        #    depends_on 不做端口映射，只规定依赖与顺序
         #二，links,external_links
         #   links将两个服务链接起来，使之可以通信。
         #   external_links将外部创建服务链接起来，使之可以通信。
