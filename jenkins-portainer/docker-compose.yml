@@ -17,21 +17,3 @@ services:
             - "9000:9000"
         container_name: portainer
         restart: always
-        
-    db:
-        #构建mysql镜像
-        image: mysql
-        container_name: mysql-db # 容器名
-        command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci #设置utf8字符集
-        restart: always
-        environment:
-          MYSQL_ROOT_PASSWORD: 123456 #root管理员用户密码
-          MYSQL_USER: keith   #创建test用户
-          MYSQL_PASSWORD: 1989929  #设置test用户的密码
-        ports:
-          - '3306:3306'  #host物理直接映射端口为6606
-        volumes:
-            #mysql数据库挂载到host物理机目录/e/docker/mysql/data/db
-          - "/opt/dockervol/mysql/data/db:/var/lib/mysql"  
-            #容器的配置目录挂载到host物理机目录/e/docker/mysql/data/conf  
-          - "/opt/dockervol/mysql/data/conf:/etc/mysql/conf.d"  
