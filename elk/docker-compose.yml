@@ -8,12 +8,30 @@ services:
         container_name: elasticsearch-1 #容器名称
         hostname: es01 #为了让hostname可以被发现，必须使用links 连接
         
-        #使用 depends_on 来访问容器中的数据,会依据依赖顺序启动服务,启动时 SERVICE 会自动包括 SERVICE 的依赖
+        #容器间通信
+        #一，depends_on
+        #   使用 depends_on 来访问容器中的数据,会依据依赖顺序启动服务,启动时 SERVICE 会自动包括 SERVICE 的依赖
+            depends_on 不做端口映射，只规定依赖与顺序
+        #二，links,external_links
+        #   links将两个服务链接起来，使之可以通信。
+        #   external_links将外部创建服务链接起来，使之可以通信。
+        #   方法是设置/etc/hosts的域名解析。
+        
+        #       links:
+        #           - db
+        #        external_links:
+        #           - busybox
+        #   将会在容器的host上写上
+        #   172.17.0.25 db e5023450189d django_db_1
+        #   172.17.0.29 busybox 823bcdbf1406
+        # 其中 172.17.0.25 为 db的ip. 172.17.0.29为busybox的IP
         #
+        #三，
         #创建外部网络：docker network create some_net
         # networks:
         #- default
         #- app_net
+        #
 
 
     kibana: #服务名称（不是容器名）
@@ -32,6 +50,9 @@ services:
         image: logstash  #使用的镜像
         restart: "always" #重启策略，能够使服务保持始终运行，生产环境推荐使用
         container_name: logstash #容器名称
+        ports:
+            - "5044:5044"  #暴露的端口信息和docker run -d -p 80:80 一样
+            - "5045:5045"
         #挂载文件1.自定义配置文件 2.logstash启动配置文件 3.文件读取的挂载路径
         volumes:  
           - /opt/dockervol/logstash/logstash.conf:/etc/logstash/conf.d/logstash.conf    
