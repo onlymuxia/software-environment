@@ -16,5 +16,5 @@ services:
             #mysql数据库挂载到host物理机目录/e/docker/mysql/data/db
           - "/opt/dockervol/mysql/data/db:/var/lib/mysql"  
             #容器的配置目录挂载到host物理机目录/e/docker/mysql/data/conf  
-          - "/opt/dockervol/mysql/data/conf:/etc/mysql/conf.d"  
+          - "/opt/dockervol/mysql/data/conf:/etc/mysql"  
           - ./sql:/docker-entrypoint-initdb.d
